@@ -1,10 +1,9 @@
 /* =========================================================
-   main.js — HERO GLOBE (calm, small labels, slow)
+   main.js — HERO GLOBE (calm, lead spots, slow)
    Canvas id: #galaxy
    - Globe-style sphere with meridians
-   - Small, plain packaging labels riding the surface
+   - Rotating globe with random lead labels
    - Slow motion, subtle arcs + packets
-   - Hover highlight (scale/opacity) anywhere, incl. over text
    ========================================================= */
 (function heroGlobe(){
   const cvs = document.getElementById('galaxy'); if(!cvs) return;
@@ -26,6 +25,8 @@
   const renderer = new THREE.WebGLRenderer({ canvas: cvs, antialias: true, alpha: true });
   const DPR = Math.min(2, window.devicePixelRatio || 1);
   const scene = new THREE.Scene();
+  const globe = new THREE.Group();
+  scene.add(globe);
   const camera = new THREE.PerspectiveCamera(55, 2, 0.1, 2000);
   camera.position.set(0, 0, 120);
   scene.add(new THREE.AmbientLight(0xffffff, 0.85));
@@ -36,7 +37,7 @@
     new THREE.SphereGeometry(R, 96, 96),
     new THREE.MeshBasicMaterial({ color: PAL.core, transparent: true, opacity: 0.55 })
   );
-  scene.add(core);
+  globe.add(core);
 
   // ---------- Thin star shell (calm background) ----------
   const shellCount = 700;
@@ -55,7 +56,7 @@
 
   // ---------- Meridians / Parallels (wireframe feel) ----------
   const meridianMat = new THREE.LineBasicMaterial({ color: new THREE.Color(PAL.meridian) });
-  const grid = new THREE.Group(); scene.add(grid);
+  const grid = new THREE.Group(); globe.add(grid);
 
   function ring(radius, tiltX = 0, tiltY = 0, segments = 128) {
     const geo = new THREE.BufferGeometry();
@@ -88,7 +89,7 @@
 
   // ---------- Arcs across globe (subtle, sparse) ----------
   const arcMat = new THREE.LineBasicMaterial({ color: PAL.arc, transparent: true, opacity: 0.24 });
-  const arcsGroup = new THREE.Group(); scene.add(arcsGroup);
+  const arcsGroup = new THREE.Group(); globe.add(arcsGroup);
 
   function randOnSphere(radius = R) {
     return new THREE.Vector3(Math.random() - .5, Math.random() - .5, Math.random() - .5)
@@ -124,56 +125,83 @@
       t: Math.random(),
       speed: 0.004 + Math.random() * 0.002 // slow
     };
-    scene.add(sprite); packets.push(sprite);
+    globe.add(sprite); packets.push(sprite);
   });
 
-  // ---------- Small plain labels on surface ----------
-  const LABELS = [
-    "Packaging solutions", "Automation", "Custom packaging", "Corrugated",
-    "Stretch wrap", "Labels & stickers", "Flexible packaging", "Folding cartons",
-    "Pallet & crating", "Industrial supplies", "Lead found", "Lead warmed",
-    "Quote sent", "PO received", "Quota met", "Retention", "Material savings",
-    "COGS reduced", "Labor saved", "Sustainability"
-  ];
-  const labelSprites = [];
-
+  // ---------- Dynamic lead spots ----------
   function makeTextSprite(text, color = PAL.label) {
     const canvas = document.createElement('canvas'); canvas.width = 512; canvas.height = 128;
     const g = canvas.getContext('2d'); g.clearRect(0, 0, canvas.width, canvas.height);
-    g.fillStyle = color; g.shadowColor = 'rgba(255,255,255,0.18)'; g.shadowBlur = 2;
+    g.fillStyle = color;
     g.font = '700 26px Inter, Montserrat, system-ui, sans-serif';
     g.textBaseline = 'middle';
     g.fillText(text, 10, canvas.height / 2);
     const tex = new THREE.CanvasTexture(canvas); tex.minFilter = THREE.LinearFilter;
-    const spr = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0.55, depthWrite: false }));
-    const baseW = 16; // small
-    spr.scale.set(baseW, baseW * 0.25, 1);
-    spr.userData = { baseW, hover: false, phi: Math.random() * Math.PI, theta: Math.random() * Math.PI * 2, drift: (Math.random() * 0.4 + 0.6) };
+    const spr = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0.8, depthWrite: false }));
+    const baseW = 28;
+    spr.scale.set(baseW, baseW * 0.4, 1);
     return spr;
   }
 
-  function placeSpherical(sprite) {
-    const { phi, theta } = sprite.userData;
-    const x = R * Math.sin(phi) * Math.cos(theta);
-    const y = R * Math.cos(phi);
-    const z = R * Math.sin(phi) * Math.sin(theta);
-    sprite.position.set(x, y, z);
+  const LOCATIONS = [
+    { name: 'United States', lat: 37.0902, lon: -95.7129 },
+    { name: 'Canada',       lat: 56.1304, lon: -106.3468 },
+    { name: 'Germany',      lat: 51.1657, lon: 10.4515 },
+    { name: 'Brazil',       lat: -14.2350, lon: -51.9253 },
+    { name: 'Australia',    lat: -25.2744, lon: 133.7751 }
+  ];
+  const PRODUCTS = {
+    'Custom Packaging': ['die‑cut mailers','insert trays','retail boxes','mailer kits'],
+    'Corrugated': ['double‑wall boxes','printed cartons','litho‑lam boxes'],
+    'Stretch Wraps': ['machine film','hand film','eco film'],
+    'Labels & Stickers': ['barcode sets','UL labels','die‑cut rolls'],
+    'Flexible Packaging': ['stand‑up pouches','barrier bags','sachets']
+  };
+  const INDUSTRIES = Object.keys(PRODUCTS);
+
+  function latLonToAngles(lat, lon){
+    return {
+      phi: THREE.MathUtils.degToRad(90 - lat),
+      theta: THREE.MathUtils.degToRad(lon + 180)
+    };
   }
 
-  LABELS.forEach(t => {
-    const s = makeTextSprite(t);
-    placeSpherical(s);
-    scene.add(s); labelSprites.push(s);
-  });
+  function placeOnGlobe(obj, phi, theta, radius = R){
+    const x = radius * Math.sin(phi) * Math.cos(theta);
+    const y = radius * Math.cos(phi);
+    const z = radius * Math.sin(phi) * Math.sin(theta);
+    obj.position.set(x, y, z);
+  }
 
-  // ---------- Raycaster hover on labels ----------
-  const raycaster = new THREE.Raycaster();
-  const mouse = new THREE.Vector2(0, 0);
-  cvs.addEventListener('pointermove', (e) => {
-    const r = cvs.getBoundingClientRect();
-    mouse.x = ((e.clientX - r.left) / r.width) * 2 - 1;
-    mouse.y = -((e.clientY - r.top) / r.height) * 2 + 1;
-  });
+  let activeLabel = null, activeMarker = null;
+
+  function spawnLead(){
+    if(activeLabel){ globe.remove(activeLabel); activeLabel.material.map.dispose(); }
+    if(activeMarker){ globe.remove(activeMarker); }
+
+    const loc = LOCATIONS[Math.floor(Math.random()*LOCATIONS.length)];
+    const ind = INDUSTRIES[Math.floor(Math.random()*INDUSTRIES.length)];
+    const kw = PRODUCTS[ind][Math.floor(Math.random()*PRODUCTS[ind].length)];
+    const n = Math.floor(Math.random()*900) + 50;
+    const text = `${n} ${ind} leads in ${loc.name} for ${kw} (30s)`;
+
+    const label = makeTextSprite(text);
+    const {phi, theta} = latLonToAngles(loc.lat, loc.lon);
+    placeOnGlobe(label, phi, theta, R + 3);
+    globe.add(label);
+
+    const marker = new THREE.Mesh(
+      new THREE.SphereGeometry(1.2, 16, 16),
+      new THREE.MeshBasicMaterial({ color: PAL.node })
+    );
+    placeOnGlobe(marker, phi, theta, R);
+    globe.add(marker);
+
+    activeLabel = label; activeMarker = marker;
+  }
+
+  spawnLead();
+  setInterval(spawnLead, 3000);
 
   // ---------- Resize ----------
   function resize() {
@@ -201,9 +229,7 @@
     camera.lookAt(0, 0, 0);
 
     // Globe rotation
-    core.rotation.y += 0.0008;
-    grid.rotation.y += 0.0008;
-    arcsGroup.rotation.y += 0.0008;
+    globe.rotation.y += 0.0008;
     shell.rotation.y += 0.0003;
 
     // Packets progressing along their arc lines
@@ -217,27 +243,10 @@
       s.position.set(x, y, z);
     });
 
-    // Labels gently drift on sphere + face camera
-    labelSprites.forEach((spr, i) => {
-      const u = spr.userData;
-      // drift across longitude (theta)
-      u.theta += 0.0006 * u.drift; // slow
-      placeSpherical(spr);
-      spr.lookAt(camera.position);
-
-      // hover animation (subtle)
-      const targetW = u.hover ? u.baseW * 1.15 : u.baseW;
-      spr.scale.x += (targetW - spr.scale.x) * 0.12;
-      spr.scale.y = spr.scale.x * 0.25;
-      const targetO = u.hover ? 0.9 : 0.55;
-      spr.material.opacity += (targetO - spr.material.opacity) * 0.12;
-    });
-
-    // Hover detection
-    raycaster.setFromCamera(mouse, camera);
-    const hits = raycaster.intersectObjects(labelSprites, false);
-    labelSprites.forEach(s => s.userData.hover = false);
-    if (hits[0]?.object) hits[0].object.userData.hover = true;
+    // Keep active label facing the camera
+    if (activeLabel) {
+      activeLabel.lookAt(camera.position);
+    }
 
     renderer.render(scene, camera);
   })();
