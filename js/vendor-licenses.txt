@@ -1,0 +1,3 @@
+Three.js — MIT License — https://threejs.org/
+GSAP — Standard “No Charge” License for most web sites — https://greensock.com/licensing/
+JSZip — MIT License — https://stuk.github.io/jszip/

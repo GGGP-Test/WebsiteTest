@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DIY Kits — Galactly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="theme-galactly">
+  <header class="site-head">
+    <div class="nav container">
+      <a class="brand" href="index.html" aria-label="Galactly home">
+        <svg class="logo" width="24" height="24" viewBox="0 0 96 96" aria-hidden="true">
+          <defs><linearGradient id="lg-diy" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff0033"/><stop offset="1" stop-color="#ff4dd2"/></linearGradient></defs>
+        <path d="M48 8 L86 72 L10 72 Z" fill="none" stroke="url(#lg-diy)" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-text">Galactly</span>
+      </a>
+      <nav>
+        <a href="index.html#moneymaker">Money Maker/Saver</a>
+        <a href="results.html">Results</a>
+        <div class="sep"></div>
+        <a class="primary ripple" href="partnership.html">Partnership</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero hero-small container">
+    <div class="hero-inner small">
+      <div class="hero-copy">
+        <h1>DIY Kits</h1>
+        <p class="sub">Pick your industry and features. Download a working starter kit that runs locally — zero setup.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="kits container">
+    <div class="section-head"><h2>Build your kit</h2></div>
+    <form id="kitForm" class="kit-grid">
+      <div class="card">
+        <h3>Industry</h3>
+        <select id="industry" required>
+          <option>Custom Packaging</option>
+          <option>Pallet & Crating</option>
+          <option>Labels & Stickers</option>
+          <option>Flexible Packaging</option>
+          <option>Folding Cartons</option>
+        </select>
+      </div>
+      <div class="card">
+        <h3>Acquisition</h3>
+        <label><input type="checkbox" name="acq" value="Scoring" checked /> Intent + Weight + Character scoring</label>
+        <label><input type="checkbox" name="acq" value="Outreach" checked /> Auto‑personalized outreach</label>
+        <label><input type="checkbox" name="acq" value="LeadMagnet" checked /> Lead‑magnet builder</label>
+        <label><input type="checkbox" name="acq" value="Tracking" /> Jump tracking (Hyros‑style)</label>
+      </div>
+      <div class="card">
+        <h3>Retention</h3>
+        <label><input type="checkbox" name="ret" value="Feedback" checked /> Feedback + NPS</label>
+        <label><input type="checkbox" name="ret" value="Reorder" checked /> Reorder cadence</label>
+        <label><input type="checkbox" name="ret" value="Referral" /> Review/Referral prompts</label>
+      </div>
+      <div class="card">
+        <h3>Outputs</h3>
+        <label><input type="checkbox" name="out" value="Prompts" checked /> Manager/Acq/Ret prompts</label>
+        <label><input type="checkbox" name="out" value="Workflows" checked /> JSON workflows + schema</label>
+        <label><input type="checkbox" name="out" value="Templates" checked /> Outreach templates</label>
+      </div>
+      <div class="card actions">
+        <button type="submit" class="primary ripple">Generate Starter Kit (.zip)</button>
+        <p id="downloadNote" class="note" hidden>Generating… your browser will download a .zip file.</p>
+      </div>
+    </form>
+  </section>
+
+  <footer class="foot">© <span id="year"></span> Go Galactic Growth Partner Ltd.</footer>
+
+  <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/diy.js"></script>
+</body>
+</html>

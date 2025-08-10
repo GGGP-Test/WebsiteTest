@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Galactly — Private AI for Packaging Growth</title>
+  <meta name="description" content="Galactly builds private AI that finds ready-to-buy demand, closes it, and keeps customers longer for packaging companies." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="assets/logo-primary.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="theme-galactic">
+  <!-- Preloader -->
+  <div id="preloader" aria-hidden="true"><div class="spinner"></div></div>
+
+  <!-- Header -->
+  <header class="site-head">
+    <div class="nav">
+      <a class="brand" href="#top" aria-label="Galactly home">
+        <img src="assets/logo-primary.svg" alt="" class="brand-mark" />
+        <span class="brand-word">Galactly</span>
+      </a>
+      <nav>
+        <a href="#engine">Money Engine</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#faq">FAQ</a>
+        <div class="sep" aria-hidden="true"></div>
+        <a class="ghost ripple" href="#diy">DIY Kits</a>
+        <a class="primary ripple" href="#contact">Partnership</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO: Galactic Neural Cluster -->
+  <main id="top">
+    <section class="hero hero-galaxy" aria-label="Galactic neural cluster hero">
+      <canvas id="galaxy"></canvas>
+      <div class="hero-copy">
+        <h1><span class="accent">Private AI</span> that makes money and saves money — automatically.</h1>
+        <p class="sub">Built for packaging companies. Detect demand, talk for you, retain longer. Zero extra headcount.</p>
+        <div class="cta-row">
+          <a href="#engine" class="primary ripple">See Money Engine</a>
+          <a href="#workflow" class="ghost ripple">How it works</a>
+        </div>
+      </div>
+      <div class="scroll-hint" aria-hidden="true">scroll</div>
+    </section>
+
+    <!-- MONEY ENGINE: Maker vs Saver (below hero) -->
+    <section id="engine" class="engine" aria-label="Money Engine">
+      <div class="section-head">
+        <h2>Money Engine — <span class="accent">Maker</span> & <span class="accent">Saver</span></h2>
+        <p>Two departments. One brain. 60‑second non‑repeating stories that prove how it works.</p>
+      </div>
+
+      <!-- Controls row -->
+      <div class="engine-ctrls">
+        <div class="industry">
+          <label for="industrySel">Industry</label>
+          <select id="industrySel" aria-label="Select industry">
+            <option>Custom Packaging</option>
+            <option>Corrugated</option>
+            <option>Stretch Wraps</option>
+            <option>Labels & Stickers</option>
+            <option>Flexible Packaging</option>
+            <option>Pallet & Crating</option>
+            <option>Folding Cartons</option>
+            <option>Industrial Supplies</option>
+          </select>
+        </div>
+        <div class="transport">
+          <button id="playPause" class="ghost ripple" aria-pressed="false">Pause</button>
+          <button id="nextScene" class="ghost ripple">Next</button>
+        </div>
+        <div class="timeline">
+          <div class="tbar" id="timelineBar"><span></span></div>
+          <small>auto-playing • 60s cycle • unique visuals</small>
+        </div>
+      </div>
+
+      <div class="engine-grid">
+        <!-- MONEY MAKER -->
+        <article class="panel maker">
+          <header>
+            <h3>💰 Money Maker AI</h3>
+            <p>Finds, warms, and closes new revenue.</p>
+          </header>
+
+          <div class="stage">
+            <canvas id="makerCanvas" width="960" height="540" aria-label="Money Maker canvas animation"></canvas>
+            <div class="overlay-cards" id="makerOverlay">
+              <!-- dynamic cards injected -->
+            </div>
+          </div>
+
+          <div class="metrics" id="makerMetrics" aria-label="Maker metrics">
+            <div><strong id="mkLeads">0</strong><span>Leads spotted</span></div>
+            <div><strong id="mkReplies">0</strong><span>Replies</span></div>
+            <div><strong id="mkQuotes">0</strong><span>Quotes</span></div>
+            <div><strong id="mkDeals">0</strong><span>Deals</span></div>
+            <div><strong id="mkRev">$0</strong><span>New revenue</span></div>
+          </div>
+
+          <div class="feed" id="makerFeed" aria-live="polite" aria-label="Live maker events"></div>
+        </article>
+
+        <!-- MONEY SAVER -->
+        <article class="panel saver">
+          <header>
+            <h3>💸 Money Saver AI</h3>
+            <p>Protects margin, reduces churn, and saves labor.</p>
+          </header>
+
+          <div class="stage">
+            <canvas id="saverCanvas" width="960" height="540" aria-label="Money Saver canvas animation"></canvas>
+            <div class="overlay-cards" id="saverOverlay"></div>
+          </div>
+
+          <div class="metrics" id="saverMetrics" aria-label="Saver metrics">
+            <div><strong id="svTickets">0</strong><span>Issues solved</span></div>
+            <div><strong id="svChurn">0%</strong><span>Churn delta</span></div>
+            <div><strong id="svLabor">$0</strong><span>Labor saved</span></div>
+            <div><strong id="svCOGS">$0</strong><span>COGS saved</span></div>
+            <div><strong id="svRetained">0</strong><span>Accounts retained</span></div>
+          </div>
+
+          <div class="feed" id="saverFeed" aria-live="polite" aria-label="Live saver events"></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Interactive Workflow (compact) -->
+    <section id="workflow" class="workflow" aria-label="Interactive workflow">
+      <div class="section-head">
+        <h2>Interactive Workflow</h2>
+        <p>From signal → score → outreach → deal → retention. Click steps to explore.</p>
+      </div>
+      <div class="flow-grid">
+        <button class="flow-step" data-k="signals">Signals</button>
+        <button class="flow-step" data-k="scoring">Scoring</button>
+        <button class="flow-step" data-k="outreach">Outreach</button>
+        <button class="flow-step" data-k="routing">Routing</button>
+        <button class="flow-step" data-k="closing">Closing</button>
+        <button class="flow-step" data-k="retention">Retention</button>
+      </div>
+      <div class="flow-detail" id="flowDetail">
+        <h3>Signals</h3>
+        <p>Public RFPs, reviews, social posts, directory updates, search spikes, job changes, tech installs.</p>
+        <ul id="flowBullets"></ul>
+      </div>
+    </section>
+
+    <!-- DIY -->
+    <section id="diy" class="diy">
+      <div class="section-head">
+        <h2>DIY Kits (free)</h2>
+        <p>Download a working starter kit that runs locally — zero setup.</p>
+      </div>
+      <form id="kitForm" class="kit-grid">
+        <label>Industry
+          <select id="kitIndustry">
+            <option>Custom Packaging</option>
+            <option>Corrugated</option>
+            <option>Stretch Wraps</option>
+            <option>Labels & Stickers</option>
+            <option>Flexible Packaging</option>
+            <option>Pallet & Crating</option>
+            <option>Folding Cartons</option>
+            <option>Industrial Supplies</option>
+          </select>
+        </label>
+        <label><input type="checkbox" value="Scoring" checked/> Intent/Weight/Character scoring</label>
+        <label><input type="checkbox" value="Outreach" checked/> Auto‑personalized outreach</label>
+        <label><input type="checkbox" value="LeadMagnet" checked/> Lead‑magnet builder</label>
+        <label><input type="checkbox" value="Tracking" /> Hyros‑style jump tracking</label>
+        <button type="submit" class="primary ripple">Generate Kit (.zip)</button>
+        <p id="kitNote" class="note" hidden>Generating…</p>
+      </form>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq">
+      <div class="section-head"><h2>FAQ</h2></div>
+      <details>
+        <summary>Is anything here paid?</summary>
+        <p>No. Everything on this page runs in your browser. Kits are generated locally and are free.</p>
+      </details>
+      <details>
+        <summary>Does it work with my CRM?</summary>
+        <p>Exports clean JSON/CSV and templates for easy import. No lock‑in.</p>
+      </details>
+      <details>
+        <summary>What about privacy?</summary>
+        <p>No trackers. No Google Forms. The demo data stays on your device.</p>
+      </details>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+      <div class="section-head"><h2>Start the conversation</h2></div>
+      <form id="contactForm" class="contact-form" autocomplete="on">
+        <div class="grid">
+          <label>Company<input required name="company" placeholder="Acme Packaging Co." /></label>
+          <label>Work email<input required type="email" name="email" placeholder="you@company.com" /></label>
+          <label>Website<input type="url" name="site" placeholder="https://…" /></label>
+          <label>Monthly orders<input type="number" name="orders" min="0" step="1" value="500" /></label>
+        </div>
+        <label>What problem should AI solve first?
+          <textarea name="msg" rows="4" placeholder="Lead volume, reply rate, churn, staffing, margin…"></textarea>
+        </label>
+        <div class="actions">
+          <button class="primary ripple" type="submit">Request Intake Link</button>
+          <span id="contactNote" class="note"></span>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="foot">© 2025 Galactly — Private AI for Packaging</footer>
+
+  <!-- Vendors -->
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
+
+  <!-- App -->
+  <script src="js/main.js"></script>
+</body>
+</html>

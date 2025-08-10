@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Results — Galactly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="theme-galactly">
+  <header class="site-head">
+    <div class="nav container">
+      <a class="brand" href="index.html" aria-label="Galactly home">
+        <svg class="logo" width="24" height="24" viewBox="0 0 96 96" aria-hidden="true">
+          <defs><linearGradient id="lg-res" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff0033"/><stop offset="1" stop-color="#ff4dd2"/></linearGradient></defs>
+          <path d="M48 8 L86 72 L10 72 Z" fill="none" stroke="url(#lg-res)" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-text">Galactly</span>
+      </a>
+      <nav>
+        <a href="diy.html">DIY Kits</a>
+        <a href="partnership.html">Partnership</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero hero-small container">
+    <div class="hero-inner small">
+      <div class="hero-copy">
+        <h1>Results Library</h1>
+        <p class="sub">Before/after views and the moments that move the needle.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="before-after container">
+    <div class="section-head"><h2>Reply rate — before → after</h2></div>
+    <div class="ba-card">
+      <div class="ba-wrap" data-metric="Replies %">
+        <div class="ba before"><span>Before</span></div>
+        <div class="ba after"><span>After</span></div>
+        <div class="ba-handle" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"></div>
+      </div>
+      <div class="ba-stats">
+        <div><strong id="baReplies">0%</strong><span>Replies</span></div>
+        <div><strong id="baDeals">0</strong><span>Deals / mo</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">© <span id="year"></span> Go Galactic Growth Partner Ltd.</footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/results.js"></script>
+</body>
+</html>
